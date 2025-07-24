@@ -1,0 +1,17 @@
+#! kustomization.yaml
+# Generated code, do not edit
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+    - 0-catastroanimales-namespace.yaml
+    - api-express-deployment.yaml
+    - api-express-expose.yaml
+    - api-express-service.yaml
+    - catastro-net-network-policy.yaml
+    - db-deployment.yaml
+    - db-expose.yaml
+    - db-mysql-data-persistentVolumeClaim.yaml
+    - db-service.yaml
+    - frontend-deployment.yaml
+    - frontend-expose.yaml
+    - frontend-service.yaml

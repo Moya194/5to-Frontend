@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  # Servicio para la base de datos MySQL
+  db:
+    image: mysql:8.0
+    container_name: mysql_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD} # Toma la variable de .env
+      MYSQL_DATABASE: ${DB_NAME}         # Toma la variable de .env
+    ports:
+      # Mapea el puerto 3306 del contenedor al 3307 de tu máquina
+      # para evitar conflictos si ya tienes MySQL instalado localmente.
+      - "3307:3306"
+    volumes:
+      # Persiste los datos de la base de datos para que no se pierdan al reiniciar
+      - db-data:/var/lib/mysql
+
+  # Servicio para tu aplicación de Express
+  app:
+    container_name: express_api
+    # Construye la imagen usando el Dockerfile en el directorio actual (.)
+    build: .
+    restart: always
+    ports:
+      # Mapea el puerto 34568 del contenedor al 34568 de tu máquina
+      - "34568:34568"
+    # Carga las variables de entorno desde el archivo .env
+    env_file:
+      - .env
+    # Hace que este servicio espere a que el servicio 'db' esté listo
+    depends_on:
+      - db
+
+# Define el volumen nombrado para persistir los datos de la base de datos
+volumes:
+  db-data:

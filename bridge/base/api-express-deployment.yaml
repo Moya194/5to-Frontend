@@ -1,0 +1,45 @@
+#! api-express-deployment.yaml
+# Generated code, do not edit
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: api-express
+    namespace: catastroanimales
+    labels:
+        com.docker.compose.project: catastroanimales
+        com.docker.compose.service: api-express
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            com.docker.compose.project: catastroanimales
+            com.docker.compose.service: api-express
+    strategy:
+        type: Recreate
+    template:
+        metadata:
+            labels:
+                com.docker.compose.project: catastroanimales
+                com.docker.compose.service: api-express
+                com.docker.compose.network.catastro-net: "true"
+        spec:
+            containers:
+                - name: api-express
+                  image: catastroanimales-api-express
+                  imagePullPolicy: IfNotPresent
+                  env:
+                    - name: DB_HOST
+                      value: "localhost"
+                    - name: DB_NAME
+                      value: "CatastroAnimales"
+                    - name: DB_PASSWORD
+                      value: "root"
+                    - name: DB_USER
+                      value: "root"
+                    - name: FRONTEND_URL
+                      value: "http://localhost:34569"
+                    - name: PORT
+                      value: "34567"
+                  ports:
+                    - name: api-expres-3000
+                      containerPort: 3000

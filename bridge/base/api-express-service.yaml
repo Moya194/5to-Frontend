@@ -1,0 +1,23 @@
+# check if there is at least one published port
+
+#! api-express-service.yaml
+# Generated code, do not edit
+apiVersion: v1
+kind: Service
+metadata:
+    name: api-express-published
+    namespace: catastroanimales
+    labels:
+        com.docker.compose.project: catastroanimales
+        com.docker.compose.service: api-express
+spec:
+    selector:
+        com.docker.compose.project: catastroanimales
+        com.docker.compose.service: api-express
+    ports:
+        - name: api-expres-3000
+          port: 3000
+          protocol: TCP
+          targetPort: api-expres-3000
+
+# check if there is at least one published port
